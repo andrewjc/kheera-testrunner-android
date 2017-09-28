@@ -1,0 +1,11 @@
+<manifest package="com.anz.kheera"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <uses-sdk tools:overrideLibrary="android.support.test.uiautomator.v18"/>
+    <uses-permission android:name="android.permission.DISABLE_KEYGUARD" />
+    <application>
+
+    </application>
+
+</manifest>

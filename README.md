@@ -1,2 +1,2 @@
 # kheera-testrunner-android
-BDD Framework for Android
+A BDD framework for Android
