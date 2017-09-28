@@ -1,1 +1,1 @@
-include ':app', ':runnerlib'
+include ':app', ':test-runner'
