@@ -225,7 +225,7 @@ public class FeatureFileExecutor extends Runner {
                                         "File: " + String.format("%s (Line %s)", featureFilename, "0") + "\r\n" +
                                         "Scenario: " + pickle.getName() + "\r\n" +
                                         "Steps: \r\n" + pickleInstanceDescription + "\r\n\r\n" +
-                                        "Reason: Failed to find/call onStartTest method.";
+                                        "Reason: Failed to execute onStartTest method.";
                         errorEncountered = true;
                         notifier.fireTestFailure(new Failure(Description.createTestDescription(featureFileModel.getName(), "onStartTest", null), new AutomationRunnerException(errorDescription, e)));
                     }
@@ -352,10 +352,12 @@ public class FeatureFileExecutor extends Runner {
                                                     "Reason: " + (runnerConfig.DetailedErrors ? e.getMessage() + "\r\n\r\n" + getStackTraceString(e.getStackTrace()) : e.getMessage()) + "\r\n";
 
                                     if (e instanceof AssumptionViolatedException) {
-                                        notifier.fireTestIgnored(Description.createTestDescription(featureFileModel.getName(), pickle.getName()));
+                                        notifier.fireTestAssumptionFailed(new Failure(Description.createTestDescription(featureFileModel.getName(), pickle.getName(), null), new AutomationRunnerException(errorDescription, null)));
                                         break;
                                     } else {
                                         errorEncountered = true;
+                                        notifier.fireTestFailure(new Failure(testDescription, new AutomationRunnerException(errorDescription, null)));
+
                                         if (runnerConfig.Screenshots) {
                                             try {
                                                 String tag = step.getText().replaceAll("[\"!@#$%-+^&*(),.;'’?~`\n]", "_").replace("\\n", "_").replace(" ", "_").replace(":", "");
@@ -382,6 +384,7 @@ public class FeatureFileExecutor extends Runner {
                                             "Steps: \r\n" + pickleInstanceDescriptionDetailed + "\r\n\r\n" +
                                             "Reason: Failed to find an implementation for the scenario step.\r\n" +
                                             "Details:\r\n\r\n" + "Step: " + step.getText();
+                            notifier.fireTestFailure(new Failure(Description.createTestDescription(featureFileModel.getName(), pickle.getName(), null), new AutomationRunnerException(errorDescription, null)));
                             errorEncountered = true;
                             allSuccessful = false;
                             break;
@@ -427,14 +430,7 @@ public class FeatureFileExecutor extends Runner {
 
             Log.d(runnerConfig.LogTag, String.format("finished: %s(%s)", pickle.getName(), featureFileModel.getName()));
 
-            // Report status to the runner
-            if(!errorEncountered)
-                notifier.fireTestFinished(testDescription);
-            else {
-                notifier.fireTestFailure(new Failure(Description.createTestDescription(featureFileModel.getName(), pickle.getName(), null), new AutomationRunnerException(errorDescription, null)));
-                allSuccessful = false;
-            }
-
+            notifier.fireTestFinished(testDescription);
         }
 
         return allSuccessful;
@@ -584,7 +580,7 @@ public class FeatureFileExecutor extends Runner {
                     }
                     for (PickleTag tag : pickle.getTags()) {
                         String tagText = tag.getName().toLowerCase(Locale.getDefault());
-                        if (tagText.startsWith("@ignore") || tagText.startsWith("@skip") || tagText.startsWith("@disable") || tagText.startsWith("@note")) {
+                        if (tagText.startsWith("@ignore") || tagText.startsWith("@skip") || tagText.startsWith("@disable") || tagText.startsWith("@filter") || tagText.startsWith("@note")) {
 
                             final Matcher paramsMatcher = paramMatchPattern.matcher(tagText);
                             boolean willIgnore = true;
@@ -603,13 +599,13 @@ public class FeatureFileExecutor extends Runner {
                                 if(groupCount == 2) { // a key value pair patch
                                     String key = paramsMatcher.group(1);
                                     String value = paramsMatcher.group(2);
-                                    if(key.toLowerCase(Locale.getDefault()).equals("maxsdkversion")) {
+                                    if(key.toLowerCase(Locale.getDefault()).equals("maxsdkversion")||key.toLowerCase(Locale.getDefault()).equals("maxsdk")) {
                                         // Ignore this test, if the sdk is above the given value
                                         if(Integer.parseInt(value) <= Build.VERSION.SDK_INT)
                                             willIgnore = true;
                                     }
 
-                                    if(key.toLowerCase(Locale.getDefault()).equals("minsdkversion")) {
+                                    if(key.toLowerCase(Locale.getDefault()).equals("minsdkversion") || key.toLowerCase(Locale.getDefault()).equals("minsdk")) {
                                         // Ignore this test, if the sdk is below the given value
                                         if(Integer.parseInt(value) >= Build.VERSION.SDK_INT)
                                             willIgnore = true;

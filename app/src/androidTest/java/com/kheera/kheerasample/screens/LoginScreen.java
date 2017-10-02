@@ -1,12 +1,12 @@
-package kheera.com.kheerasample.screens;
+package com.kheera.kheerasample.screens;
 
 import android.app.Activity;
 import android.app.KeyguardManager;
 import android.content.Intent;
 import android.view.WindowManager;
 
-import kheera.com.kheerasample.LoginActivity;
-import kheera.com.kheerasample.R;
+import com.kheera.kheerasample.LoginActivity;
+import com.kheera.kheerasample.R;
 
 import static android.content.Context.KEYGUARD_SERVICE;
 import static android.support.test.InstrumentationRegistry.getInstrumentation;

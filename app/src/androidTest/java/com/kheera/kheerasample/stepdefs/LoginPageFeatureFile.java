@@ -1,4 +1,4 @@
-package kheera.com.kheerasample.stepdefs;
+package com.kheera.kheerasample.stepdefs;
 
 import android.content.Context;
 import android.os.Build;
@@ -16,15 +16,16 @@ import com.kheera.internal.TestRunnerConfig;
 
 import java.util.concurrent.TimeUnit;
 
-import kheera.com.kheerasample.R;
-import kheera.com.kheerasample.screens.LoginScreen;
+import com.kheera.kheerasample.R;
+import com.kheera.kheerasample.screens.LoginScreen;
 
 import static android.support.test.InstrumentationRegistry.getInstrumentation;
 import static android.support.test.espresso.Espresso.onView;
 import static android.support.test.espresso.assertion.ViewAssertions.matches;
 import static android.support.test.espresso.matcher.ViewMatchers.hasErrorText;
-import static android.support.test.espresso.matcher.ViewMatchers.isCompletelyDisplayed;
+import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
+import static android.support.test.espresso.matcher.ViewMatchers.withText;
 
 /**
  * Created by andrewc on 28/9/17.
@@ -34,7 +35,7 @@ import static android.support.test.espresso.matcher.ViewMatchers.withId;
 public class LoginPageFeatureFile implements StepDefinition {
 
     private static final String DEFAULT_EMAIL = "admin@kheera.com";
-    private static final String DEFAULT_PASSWORD = "password123";
+    private static final String DEFAULT_PASSWORD = "admin123";
 
     private TestRunnerConfig runnerConfig;
     private Context context;
@@ -92,13 +93,22 @@ public class LoginPageFeatureFile implements StepDefinition {
 
     @TestStep("^I will see a success message$")
     public void iWillSeeASuccessMessage() throws Throwable {
-        // Nothing happens here.
+        getInstrumentation().waitForIdleSync();
+        onView(withText("Welcome!")).check(matches(isDisplayed()));
     }
 
-    @TestStep("^I will see an invalid email address error message$")
+    @TestStep("^I will see an invalid password error message$")
     public void iWillSeeAErrorMessage() throws Throwable {
-
-        onView(withId(R.id.email)).check(matches(hasErrorText("This email address is invalid")));
+        onView(withId(R.id.password)).check(matches(hasErrorText("This password is incorrect")));
     }
 
+    @TestStep("^I will see a message that the password is too short$")
+    public void iWillSeeAMessageThatThePasswordIsTooShort() throws Throwable {
+        onView(withId(R.id.password)).check(matches(hasErrorText("This password is too short")));
+    }
+
+    @TestStep("^I will see a message that the email field is required$")
+    public void iWillSeeAMessageThatTheEmailFieldIsRequired() throws Throwable {
+        onView(withId(R.id.email)).check(matches(hasErrorText("This field is required")));
+    }
 }
