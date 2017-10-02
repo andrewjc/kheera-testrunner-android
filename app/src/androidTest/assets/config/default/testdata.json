@@ -1,7 +1,12 @@
 {
-  "tests": {
-    "cheese1":"Caerphilly",
-    "cheese2":"Cotherstone",
-    "cheese3":"Esrom"
+  "test": {
+    "account1": {
+      "username":"admin@kheera.com",
+      "password":"admin123"
+    },
+    "account2": {
+      "username":"andrewc@kheera.com",
+      "password":"password123"
+    }
   }
 }

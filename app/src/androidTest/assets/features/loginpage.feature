@@ -19,6 +19,19 @@ Scenario Outline: Perform a successful login with given details
         | andrewc@kheera.com  | password123 |
         | admin@kheera.com    | admin123    |
 
+
+
+@note(The credentials being passed here are defined in androidTest/assets/config/default/testdata.json
+Scenario Outline: Perform a successful login with details defined in testdata.json
+    Given I am on the login page
+    When I log in using "<email>" and "<password>"
+    Then I will see a success message
+
+    Examples:
+        | email                      | password                    |
+        | $(test.account1.username)    | $(test.account1.password) |
+        | $(test.account2.username)    | $(test.account2.password) |
+
 Scenario: Perform an invalid login
     Given I am on the login page
     When I log in using "email@wrong.com" and "wrongpass"
