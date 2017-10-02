@@ -200,7 +200,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun onShowDashboard() {
         val intent = Intent(this, DashboardActivity::class.java)
-        applicationContext.startActivity(intent)
+        startActivity(intent)
     }
 
 }
