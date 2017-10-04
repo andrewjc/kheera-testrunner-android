@@ -5,6 +5,8 @@ android:
     # Update tools and then platform-tools explicitly so lint gets an updated database. Can be removed once 3.0 is out.
     - tools
     - platform-tools
+    - emulator
+    - system-images;android-22;default;armeabi-v7a
 
 jdk:
   - oraclejdk8
@@ -14,13 +16,13 @@ before_install:
   - mkdir "$ANDROID_HOME/licenses" || true
   - echo "8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
   # Install the rest of tools (e.g., avdmanager)
-  - sdkmanager tools
-  - sdkmanager emulator
+#  - sdkmanager tools
+#  - sdkmanager emulator
   # Install the system image
-  - sdkmanager "system-images;android-22;default;armeabi-v7a"
+@  - sdkmanager "system-images;android-22;default;armeabi-v7a"
   # Create and start emulator for the script. Meant to race the install task.
   - echo no | avdmanager create avd --force -n nexus5 -k "system-images;android-22;default;armeabi-v7a" --device "Nexus 5"
-  - $ANDROID_HOME/emulator/emulator -avd nexus5 -no-audio -no-window --skin 1080x1920 &
+  - $ANDROID_HOME/emulator/emulator -avd nexus5 -no-audio -no-window -skin 1080x1920 &
 
 install: ./gradlew clean assemble assembleAndroidTest --stacktrace
 
