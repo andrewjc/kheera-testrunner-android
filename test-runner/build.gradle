@@ -1,6 +1,4 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
-apply plugin: "com.jfrog.bintray"
 
 android {
     compileSdkVersion 26
@@ -37,4 +35,4 @@ dependencies {
     implementation "de.jodamob.android:SuperReflect:1.0.1"
 }
 
-apply from: "../misc/publish.gradle"
+apply from: rootProject.file('misc/mvn.gradle')
