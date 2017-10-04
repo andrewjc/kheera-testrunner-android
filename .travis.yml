@@ -15,16 +15,15 @@ before_install:
   - echo "8933bad161af4178b1185d1a37fbf41ea5269c55" > "$ANDROID_HOME/licenses/android-sdk-license"
   # Install the rest of tools (e.g., avdmanager)
   - sdkmanager tools
+  - sdkmanager emulator
   # Install the system image
   - sdkmanager "system-images;android-18;default;armeabi-v7a"
   # Create and start emulator for the script. Meant to race the install task.
   - echo no | avdmanager create avd --force -n test -k "system-images;android-18;default;armeabi-v7a"
   - $ANDROID_HOME/emulator/emulator -avd test -no-audio -no-window &
 
-install: ./gradlew clean assemble assembleAndroidTest --stacktrace >./out.txt
+install: ./gradlew clean assemble assembleAndroidTest --stacktrace
 
-after_install:
-  - cat ./out.txt
 
 before_script:
   - android-wait-for-emulator
