@@ -6,7 +6,10 @@ android:
     - tools
     - platform-tools
     - emulator
-    - system-images;android-22;default;armeabi-v7a
+    - android-22
+    - sys-img-armeabi-v7a-android-22
+    - extra-google-m2repository
+    - extra-android-m2repository
 
 jdk:
   - oraclejdk8
