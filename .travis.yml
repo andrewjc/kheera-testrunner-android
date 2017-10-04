@@ -20,7 +20,7 @@ before_install:
   - sdkmanager "system-images;android-22;default;armeabi-v7a"
   # Create and start emulator for the script. Meant to race the install task.
   - echo no | avdmanager create avd --force -n nexus5 -k "system-images;android-22;default;armeabi-v7a" --device "Nexus 5"
-  - $ANDROID_HOME/emulator/emulator -avd nexus5 -no-audio -no-window -skin 1080x1920 &
+  - $ANDROID_HOME/emulator/emulator -avd nexus5 -cores 1 -gpu swiftshader -no-audio -no-window -skin 1080x1920 &
 
 install: ./gradlew clean assemble assembleAndroidTest --stacktrace
 
