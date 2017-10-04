@@ -29,7 +29,8 @@ android {
 }
 repositories {
     jcenter()
-    maven { url 'http://maven.google.com'}
+    mavenCentral()
+    google()
 }
 dependencies {
     implementation "com.android.support.test:runner:1.0.1"
