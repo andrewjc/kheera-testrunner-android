@@ -2,7 +2,6 @@
   "Name": "Default",
   "Description": "Default test configuration. Runs against mock server.",
   "TestData":"testdata.json",
-  "RunMockServer": true,
   "Screenshot": false,
   "IncludeSkipped": false,
   "WriteTestReport": true,

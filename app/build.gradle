@@ -8,12 +8,12 @@ android {
     compileSdkVersion 26
     buildToolsVersion '26.0.2'
     defaultConfig {
-        applicationId "kheera.com.kheerasample"
+        applicationId "com.kheera.kheerasample"
         minSdkVersion 16
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
-        testApplicationId "kheera.com.kheerasample.test"
+        testApplicationId "com.kheera.kheerasample.test"
         testInstrumentationRunner "com.kheera.KheeraRunner"
     }
     buildTypes {

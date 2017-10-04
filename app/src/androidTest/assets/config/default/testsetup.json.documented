@@ -3,9 +3,6 @@
   "Description": "Default test configuration. Runs against mock server.",
   "TestData":"testdata.json",
 
-  /* Should the embedded mock server be started for automation */
-  "RunMockServer": true,
-
   /* Should screenshots be taken on failures */
   "Screenshot": false,
 

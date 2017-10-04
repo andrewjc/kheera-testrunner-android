@@ -1,7 +1,8 @@
-package kheera.com.kheerasample
+package com.kheera.kheerasample.tests
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4
+import com.kheera.kheerasample.auth.CredentialValidator
 
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -14,16 +15,10 @@ import org.junit.Assert.*
  * See [testing documentation](http://d.android.com/tools/testing).
  */
 @RunWith(AndroidJUnit4::class)
-class ExampleInstrumentedTest {
+class LoginProviderTests {
     @Test
-    fun useAppContext() {
-        // Context of the app under test.
-        val appContext = InstrumentationRegistry.getTargetContext()
-        assertEquals("kheera.com.kheerasample", appContext.packageName)
-    }
-
-    @Test
-    fun testThatTheLoginScreenIsShown() {
-        // Etc etc
+    fun testCredentialValidatorWorks() {
+        val validator = CredentialValidator();
+        assertTrue(validator.validate("admin@kheera.com", "admin123")== true)
     }
 }
