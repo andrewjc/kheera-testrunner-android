@@ -6,8 +6,6 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 @Retention(RetentionPolicy.RUNTIME)
-@Target(ElementType.TYPE)
-@TestModuleAnnotation
-public @interface TestModule {
-    String featureFile();
+@Target({ElementType.TYPE})
+public @interface TestModuleAnnotation {
 }
