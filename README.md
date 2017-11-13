@@ -51,7 +51,7 @@ Some general hints for writing feature files:
 If a feature file is where the WHAT of a requirement gets described, then the HOW is described in the step definition. 
 
 ```java
-./app/src/androidTest/java/GalleryFeatureFile.java
+./app/src/androidTest/java/GalleryStepDefinition.java
 
 @TestModule(featureFile = "gallery.feature")
 public class GalleryStepDefinition implements StepDefinition {
