@@ -20,7 +20,7 @@ compile 'com.andrewjc.kheera:test-runner:1.0.0'
 
 It is highly recommended that you install the Android Studio plugin. The plugin provides autocomplete, code generation and more. It can be found in the misc directory.
 
-Check out the sample app found here [Sample](https://www.github.com/andrewjc/kheera-sample-app)
+Check out the sample app found here [Sample](https://github.com/andrewjc/kheera-testrunner-android/tree/master/app)
 
 ### Feature Files
 
