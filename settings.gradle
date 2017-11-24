@@ -1,1 +1,1 @@
-include ':app', ':test-runner'
+include ':samples', ':test-runner'
