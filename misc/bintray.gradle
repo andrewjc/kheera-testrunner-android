@@ -1,0 +1,111 @@
+ext {
+    bintrayRepo = POM_REPO_NAME
+    bintrayName = POM_BINTRAY_NAME
+
+    publishedGroupId = GROUP
+    libraryName = POM_NAME
+    artifact = POM_ARTIFACT_ID
+
+    libraryDescription = POM_DESCRIPTION
+
+    siteUrl = POM_SCM_URL
+    gitUrl = POM_SCM_CONNECTION
+
+    libraryVersion = VERSION_NAME
+
+    developerId = POM_DEVELOPER_ID
+    developerName = POM_DEVELOPER_NAME
+    developerEmail = POM_DEVELOPER_EMAIL
+
+    licenseName = POM_LICENCE_NAME
+    licenseUrl = POM_LICENCE_URL
+    allLicenses = ["Apache-2.0"]
+}
+
+apply plugin: 'com.jfrog.bintray'
+apply plugin: 'com.github.dcendents.android-maven'
+
+group = publishedGroupId
+version = libraryVersion
+
+install {
+    repositories.mavenInstaller {
+        // This generates POM.xml with proper parameters
+        pom {
+            project {
+                packaging 'aar'
+                groupId publishedGroupId
+                artifactId artifact
+
+                // Add your description here
+                name libraryName
+                description libraryDescription
+                url siteUrl
+
+                // Set your license
+                licenses {
+                    license {
+                        name licenseName
+                        url licenseUrl
+                    }
+                }
+                developers {
+                    developer {
+                        id developerId
+                        name developerName
+                        email developerEmail
+                    }
+                }
+                scm {
+                    connection gitUrl
+                    developerConnection gitUrl
+                    url siteUrl
+                }
+            }
+        }
+    }
+}
+
+bintray {
+	user = project.hasProperty('bintray.user') ? project.property('bintray.user') : System.getenv('BINTRAY_USER')
+	key = project.hasProperty('bintray.apikey') ? project.property('bintray.apikey') : System.getenv('BINTRAY_API_KEY')
+	configurations = ['archives']
+	pkg {
+		repo = bintrayRepo
+		name = bintrayName
+		userOrg = user
+		licenses = ['Apache-2.0']
+		vcsUrl = gitUrl
+		labels = ['android','bdd','automation','tdd']
+		publicDownloadNumbers = true
+		version {
+			name = libraryVersion
+			desc = 'Kheera TestRunner Version ' + libraryVersion
+                        released = new Date()
+			vcsTag = libraryVersion
+		}
+	}
+}
+
+task sourcesJar(type: Jar) {
+    from android.sourceSets.main.java.srcDirs
+    classifier = 'sources'
+}
+
+task javadoc(type: Javadoc) {
+    source = android.sourceSets.main.java.srcDirs
+    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
+}
+
+task javadocJar(type: Jar, dependsOn: javadoc) {
+    classifier = 'javadoc'
+    from javadoc.destinationDir
+}
+artifacts {
+    archives javadocJar
+    archives sourcesJar
+}
+
+task findConventions << {
+    println project.getConvention()
+}

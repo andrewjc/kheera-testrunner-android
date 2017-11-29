@@ -1,0 +1,69 @@
+{
+  "Name": "Default",
+  "Description": "Default test configuration. Runs against mock server.",
+  "TestData":"testdata.json",
+
+  /* Should screenshots be taken on failures */
+  "Screenshot": false,
+
+  /* Run tests marked with @skipped/@ignore/@disable tags */
+  "IncludeSkipped": false,
+
+  /* Write out report for test failures. Must set to true to use FilterBy=previouslyfailed */
+  "WriteTestReport": false,
+
+  /* Set the path for test failure reports. Defaults to an internal app data directory */
+  "ReportLogPath": "",
+
+  /* Enable detailed error reports. Uses up more memory. */
+  "DetailedErrors": false,
+
+  /*
+    Running and filtering tests:
+    Filtering requires both FilterType and FilterBy to be set.
+
+    Available FilterType arguments:
+    FilterType: tag|file|previously-failed
+
+    Filter argument examples:
+    Filtering by tags: (Explicit) - Executes all tests annotated with '@Showcase'
+    FilterType: "tag"
+    FilterBy: "Showcase"
+
+    ------------------------------------------------------------
+
+    Filtering by tags: (Regular expression) - Executes all tests with tag matching a regular expression
+    FilterType: "tag"
+    FilterBy: "/pin/"
+
+    Note: This will match all tags containing 'pin', eg 'Register Pin', 'Preference Pin', etc.
+
+    ------------------------------------------------------------
+
+    Filtering by scenario (Regular expression): Executes just the specified scenario
+    FilterType: "scenario"
+    FilterBy: "/As a user i want to/"
+
+    Note: This will match all scenarios with a name matching the given regular expression.
+
+    ------------------------------------------------------------
+
+    Filtering by scenario: Executes just the specified scenario
+    FilterType: "scenario"
+    FilterBy: "As a user i want to log in"
+
+    Note: This will match the given scenario
+
+    ------------------------------------------------------------
+
+    Filtering by feature file: - Runs all tests in a given feature file
+    FilterType: "file"
+    FilterBy: "login.feature"
+
+    ------------------------------------------------------------
+
+   */
+
+  "FilterType":"none",
+  "FilterBy":""
+}

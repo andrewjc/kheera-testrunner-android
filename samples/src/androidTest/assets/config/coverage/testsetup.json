@@ -1,0 +1,15 @@
+{
+  "Name": "Coverage",
+  "Description": "Coverage test runner configuration file.",
+  "TestData":"",
+  "RunMockServer": true,
+  "Screenshot": false,
+  "IncludeSkipped": false,
+  "WriteTestReport": false,
+  "DetailedErrors": false,
+  "IgnoreFailures": false,
+  "CoverageReport": true,
+
+  "FilterType":"none",
+  "FilterBy":""
+}

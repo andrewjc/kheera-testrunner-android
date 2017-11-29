@@ -1,0 +1,12 @@
+{
+  "test": {
+    "account1": {
+      "username":"admin@kheera.com",
+      "password":"admin123"
+    },
+    "account2": {
+      "username":"andrewc@kheera.com",
+      "password":"password123"
+    }
+  }
+}

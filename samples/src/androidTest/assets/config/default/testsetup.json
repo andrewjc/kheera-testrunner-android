@@ -1,0 +1,14 @@
+{
+  "Name": "Default",
+  "Description": "Default test configuration. Runs against mock server.",
+  "TestData":"testdata.json",
+  "Screenshot": false,
+  "IncludeSkipped": false,
+  "WriteTestReport": true,
+  "DetailedErrors": false,
+  "IgnoreFailures": false,
+  "CoverageReport": false,
+
+  "FilterType":"none",
+  "FilterBy":""
+}
