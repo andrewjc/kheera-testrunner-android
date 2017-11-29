@@ -1,0 +1,46 @@
+{
+  "language": "android",
+  "android": {
+    "components": [
+      "tools",
+      "platform-tools"
+    ]
+  },
+  "jdk": "oraclejdk8",
+  "before_install": [
+    "mkdir \"$ANDROID_HOME/licenses\" || true",
+    "echo \"d56f5187479451eabf01fb78af6dfcb131a6481e\" > \"$ANDROID_HOME/licenses/android-sdk-license\"",
+    "sdkmanager tools",
+    "sdkmanager emulator",
+    "sdkmanager \"system-images;android-22;default;armeabi-v7a\"",
+    "echo no | avdmanager create avd --force -n nexus5 -k \"system-images;android-22;default;armeabi-v7a\" --device \"Nexus 5\"",
+    "$ANDROID_HOME/emulator/emulator -avd nexus5 -cores 1 -gpu swiftshader -no-audio -no-window -skin 1080x1920 &"
+  ],
+  "install": "./gradlew clean assemble assembleAndroidTest --stacktrace",
+  "before_script": [
+    "android-wait-for-emulator",
+    "adb shell input keyevent 82",
+    "echo $gpgdata > ./key.gpg",
+    "echo \"signing.keyId=$keyid\" >> ./gradle.properties",
+    "echo \"signing.password=$keypassword\" >> ./gradle.properties",
+    "echo \"signing.secretKeyRingFile=../key.gpg\" >> ./gradle.properties"
+  ],
+  "script": "./gradlew check connectedCheck --stacktrace",
+  "after_success": [
+    ".buildscript/deploy_snapshot.sh"
+  ],
+  "sudo": false,
+  "before_cache": [
+    "rm -f $HOME/.gradle/caches/modules-2/modules-2.lock"
+  ],
+  "cache": {
+    "directories": [
+      "$HOME/.gradle/caches/",
+      "$HOME/.gradle/wrapper/"
+    ]
+  },
+  "global_env": "ORG_GRADLE_PROJECT_SONATYPE_NEXUS_USERNAME=[secure] ORG_GRADLE_PROJECT_SONATYPE_NEXUS_PASSWORD=[secure]",
+  "group": "stable",
+  "dist": "trusty",
+  "os": "linux"
+}
