@@ -27,7 +27,7 @@ To start using Kheera BDD in your Android project, follow these steps:
 * Add the dependency to your project's build.gradle file:
 
 ```gradle
-compile 'com.andrewjc:kheera-testrunner:1.0.0'
+compile 'com.andrewjc:kheera-testrunner:1.0.1'
 ```
 
 * Enable the test runner in your build.gradle file by populating the android.defaultConfig.testInstrumentationRunner property:
