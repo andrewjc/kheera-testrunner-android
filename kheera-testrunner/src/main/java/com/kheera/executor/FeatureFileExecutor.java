@@ -2,7 +2,6 @@ package com.kheera.executor;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.support.test.InstrumentationRegistry;
 import android.util.Log;
 
 import com.google.gson.JsonElement;
@@ -40,6 +39,8 @@ import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import androidx.test.InstrumentationRegistry;
+import androidx.test.core.app.ApplicationProvider;
 import gherkin.AstBuilder;
 import gherkin.GherkinDialectProvider;
 import gherkin.Parser;
@@ -70,7 +71,7 @@ public class FeatureFileExecutor extends Runner {
         this.testClass = testClass;
         this.runnerConfig = configData;
 
-        GherkinDialectProvider gherkinDialect = new GherkinDialectProvider(GERKIN_DIALECT, AssetUtils.ReadAsset(InstrumentationRegistry.getContext(), "gherkin-languages.json"));
+        GherkinDialectProvider gherkinDialect = new GherkinDialectProvider(GERKIN_DIALECT, AssetUtils.ReadAsset(InstrumentationRegistry.getInstrumentation().getContext(), "gherkin-languages.json"));
         this.gherkinParser = new Parser<>(gherkinDialect, new AstBuilder());
         this.pickleCompiler = new gherkin.pickles.Compiler();
     }
@@ -96,7 +97,7 @@ public class FeatureFileExecutor extends Runner {
                     fullPath += runnerConfig.Name.toLowerCase(Locale.getDefault())+ File.separator + runnerConfig.TestDataFile;
                 }
 
-                this.testData = new JsonParser().parse(AssetUtils.ReadAsset(InstrumentationRegistry.getContext(), fullPath));
+                this.testData = new JsonParser().parse(AssetUtils.ReadAsset(InstrumentationRegistry.getInstrumentation().getContext(), fullPath));
             }
 
 
@@ -104,7 +105,7 @@ public class FeatureFileExecutor extends Runner {
             if(testClass.isAnnotationPresent(TestModule.class))
             {
                 featureFilename = "features" + File.separator + testClass.getAnnotation(TestModule.class).featureFile();
-                String fileContent = AssetUtils.ReadAsset(InstrumentationRegistry.getContext(), featureFilename);
+                String fileContent = AssetUtils.ReadAsset(InstrumentationRegistry.getInstrumentation().getContext(), featureFilename);
                 if (fileContent == null)
                     throw new AutomationRunnerException("Unable to read the feature file: " + featureFilename, null);
 
