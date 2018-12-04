@@ -1,7 +1,6 @@
 package com.kheera.internal;
 
 import android.content.Context;
-import android.support.test.InstrumentationRegistry;
 
 import com.kheera.annotations.TestModule;
 import com.kheera.annotations.RootTestModule;
@@ -19,6 +18,7 @@ import java.util.HashSet;
 import java.util.LinkedHashSet;
 import java.util.Set;
 
+import androidx.test.core.app.ApplicationProvider;
 import dalvik.system.DexFile;
 import gherkin.pickles.Pickle;
 
@@ -195,7 +195,7 @@ public class StepDefFunctionTable {
             for (Enumeration<String> iter = df.entries(); iter.hasMoreElements();) {
                 try {
                     String s = iter.nextElement();
-                    String appPackageName = InstrumentationRegistry.getTargetContext().getPackageName();
+                    String appPackageName = ApplicationProvider.getApplicationContext().getPackageName();
 
                     if(s.startsWith("android.")) continue;
                     if (s.startsWith(appPackageName)) {

@@ -2,9 +2,8 @@ package com.kheera;
 
 import android.os.Bundle;
 import android.os.Debug;
-import android.support.test.runner.AndroidJUnitRunner;
-
 import com.kheera.factory.FeatureFileExecutorFactory;
+import androidx.test.runner.AndroidJUnitRunner;
 
 public class KheeraRunner extends AndroidJUnitRunner {
 
