@@ -4,7 +4,13 @@
 
 Kheera is a BDD Framework, especially design for Android application development workflows. It's designed to be fast, small and completely compatible with Android Test Kit, Espresso 3, UIAutomator etc.
 
+![](testrun2.gif)
+
 ### Features
+
+**Android Studio Integration**
+
+**AndroidX Support:** Supports the very latest AndroidX + Jetifier libraries
 
 **Android Test Support Library:** Builds on top of the newest Android Test Support Library and AndroidJUnitRunner. Kheera tests will run alongside existing Instrumentation, Espresso or JUnit based tests in your solution. You can gradually rewrite tests in BDD as you go.
 
@@ -22,12 +28,24 @@ Kheera is a BDD Framework, especially design for Android application development
 
 ### Getting Started
 
-To start using Kheera BDD in your Android project, follow these steps:
+To start using Kheera BDD Test Framework in your Android project, follow these steps:
 
-* Add the dependency to your project's build.gradle file:
+Step 1. Add JitPack.io to your app's repositories:
 
-```gradle
-compile 'com.andrewjc:kheera-testrunner:1.0.1'
+```
+repositories {
+    ...
+    maven { url 'https://jitpack.io' }
+    ...
+}
+```
+
+Step 2. Add the dependency
+
+```
+dependencies {
+        implementation 'com.github.andrewjc:kheera-testrunner-android:1.1.0'
+}
 ```
 
 * Enable the test runner in your build.gradle file by populating the android.defaultConfig.testInstrumentationRunner property:

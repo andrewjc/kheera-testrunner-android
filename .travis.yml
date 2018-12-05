@@ -1,46 +1,53 @@
-{
-  "language": "android",
-  "android": {
-    "components": [
-      "tools",
-      "platform-tools"
-    ]
-  },
-  "jdk": "oraclejdk8",
-  "before_install": [
-    "mkdir \"$ANDROID_HOME/licenses\" || true",
-    "echo \"d56f5187479451eabf01fb78af6dfcb131a6481e\" > \"$ANDROID_HOME/licenses/android-sdk-license\"",
-    "sdkmanager tools",
-    "sdkmanager emulator",
-    "sdkmanager \"system-images;android-22;default;armeabi-v7a\"",
-    "echo no | avdmanager create avd --force -n nexus5 -k \"system-images;android-22;default;armeabi-v7a\" --device \"Nexus 5\"",
-    "$ANDROID_HOME/emulator/emulator -avd nexus5 -cores 1 -gpu swiftshader -no-audio -no-window -skin 1080x1920 &"
-  ],
-  "install": "./gradlew clean assemble assembleAndroidTest --stacktrace",
-  "before_script": [
-    "android-wait-for-emulator",
-    "adb shell input keyevent 82",
-    "echo $gpgdata > ./key.gpg",
-    "echo \"signing.keyId=$keyid\" >> ./gradle.properties",
-    "echo \"signing.password=$keypassword\" >> ./gradle.properties",
-    "echo \"signing.secretKeyRingFile=../key.gpg\" >> ./gradle.properties"
-  ],
-  "script": "./gradlew check connectedCheck --stacktrace",
-  "after_success": [
-    ".buildscript/deploy_snapshot.sh"
-  ],
-  "sudo": false,
-  "before_cache": [
-    "rm -f $HOME/.gradle/caches/modules-2/modules-2.lock"
-  ],
-  "cache": {
-    "directories": [
-      "$HOME/.gradle/caches/",
-      "$HOME/.gradle/wrapper/"
-    ]
-  },
-  "global_env": "ORG_GRADLE_PROJECT_SONATYPE_NEXUS_USERNAME=[secure] ORG_GRADLE_PROJECT_SONATYPE_NEXUS_PASSWORD=[secure]",
-  "group": "stable",
-  "dist": "trusty",
-  "os": "linux"
-}
+sudo: true
+
+language: android
+
+jdk: oraclejdk8
+
+env:
+  global:
+    - GRADLE_OPTS='-Dorg.gradle.daemon=false -Dorg.gradle.parallel=false -Dkotlin.incremental=false -DdisablePreDex'
+    - ANDROID_TARGET=android-28
+    - ANDROID_BUILD_TOOLS_VERSION=28.0.3
+    - ANDROID_ABI=armeabi-v7a
+    - ANDROID_EMULATOR_TARGET=android-22
+    - QEMU_AUDIO_DRV=none # sometimes the emulator audio causes trouble
+    - ADB_INSTALL_TIMEOUT=5 # minutes
+
+android:
+  components:
+    - tools
+    - tools
+    - platform-tools
+    - emulator
+    - emulator
+    - build-tools-$ANDROID_BUILD_TOOLS_VERSION
+    - $ANDROID_TARGET
+    - $ANDROID_EMULATOR_TARGET
+    - extra-google-google_play_services
+    - extra-android-support
+    - extra
+    - sys-img-$ANDROID_ABI-$ANDROID_EMULATOR_TARGET
+
+licenses:
+  - 'android-sdk-preview-license-.+'
+  - 'android-sdk-preview-license-52d11cd2'
+  - 'android-sdk-license-.+'
+  - 'google-gdk-license-.+'
+
+before_install:
+  - mkdir "$ANDROID_HOME/licenses" || true
+  - echo "d56f5187479451eabf01fb78af6dfcb131a6481e" > "$ANDROID_HOME/licenses/android-sdk-license"
+  - echo yes | sdkmanager "platforms;$ANDROID_TARGET" "build-tools;$ANDROID_BUILD_TOOLS_VERSION"
+
+before_script:
+    - echo $gpgdata > ./key.gpg
+
+script:
+  - echo no | android create avd --force -n testdevice -t $ANDROID_EMULATOR_TARGET --abi $ANDROID_ABI --device "Nexus 5"
+  - emulator -avd testdevice -gpu swiftshader -no-audio -no-window -skin 1080x1920 &
+  - ./gradlew check
+  - android-wait-for-emulator
+  - adb shell input keyevent 82 &
+  - ./gradlew :samples:connectedAndroidTest
+

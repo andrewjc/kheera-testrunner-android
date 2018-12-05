@@ -2,8 +2,6 @@ package com.kheera.kheerasample.stepdefs;
 
 import android.content.Context;
 import android.os.Build;
-import android.support.test.espresso.IdlingPolicies;
-import android.support.test.espresso.intent.Intents;
 import android.util.Log;
 
 import com.kheera.annotations.OnFinishTest;
@@ -13,19 +11,22 @@ import com.kheera.annotations.TestModule;
 import com.kheera.annotations.TestStep;
 import com.kheera.internal.StepDefinition;
 import com.kheera.internal.TestRunnerConfig;
-
-import java.util.concurrent.TimeUnit;
-
 import com.kheera.kheerasample.R;
 import com.kheera.kheerasample.screens.LoginScreen;
 
-import static android.support.test.InstrumentationRegistry.getInstrumentation;
-import static android.support.test.espresso.Espresso.onView;
-import static android.support.test.espresso.assertion.ViewAssertions.matches;
-import static android.support.test.espresso.matcher.ViewMatchers.hasErrorText;
-import static android.support.test.espresso.matcher.ViewMatchers.isDisplayed;
-import static android.support.test.espresso.matcher.ViewMatchers.withId;
-import static android.support.test.espresso.matcher.ViewMatchers.withText;
+import java.util.concurrent.TimeUnit;
+
+import androidx.test.espresso.IdlingPolicies;
+import androidx.test.espresso.intent.Intents;
+
+import static androidx.test.espresso.Espresso.onView;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
+import static androidx.test.espresso.matcher.ViewMatchers.hasErrorText;
+import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
+import static androidx.test.espresso.matcher.ViewMatchers.withId;
+import static androidx.test.espresso.matcher.ViewMatchers.withText;
+import static androidx.test.platform.app.InstrumentationRegistry.getInstrumentation;
+
 
 /**
  * Created by andrewc on 28/9/17.

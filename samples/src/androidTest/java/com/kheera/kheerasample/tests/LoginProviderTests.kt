@@ -1,7 +1,6 @@
 package com.kheera.kheerasample.tests
 
-import android.support.test.InstrumentationRegistry
-import android.support.test.runner.AndroidJUnit4
+import androidx.test.runner.AndroidJUnit4
 import com.kheera.kheerasample.auth.CredentialValidator
 
 import org.junit.Test

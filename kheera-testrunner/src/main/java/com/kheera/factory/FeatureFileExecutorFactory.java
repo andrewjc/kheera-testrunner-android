@@ -1,7 +1,6 @@
 package com.kheera.factory;
 
 import android.os.Bundle;
-import android.support.test.InstrumentationRegistry;
 
 import com.google.gson.Gson;
 import com.kheera.annotations.TestModule;
@@ -9,17 +8,16 @@ import com.kheera.executor.FeatureFileExecutor;
 import com.kheera.internal.AssetUtils;
 import com.kheera.internal.AutomationRunnerException;
 import com.kheera.internal.TestRunnerConfig;
-import com.kheera.utils.StringUtils;
 
 import org.junit.runner.Runner;
 import org.junit.runners.model.RunnerBuilder;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.Locale;
 
-import static android.support.test.InstrumentationRegistry.getContext;
-import static android.support.test.InstrumentationRegistry.getTargetContext;
+import androidx.test.platform.app.InstrumentationRegistry;
+
+import static androidx.test.InstrumentationRegistry.getContext;
 
 /**
  * Created by andrewc on 27/9/17.
@@ -41,6 +39,7 @@ public class FeatureFileExecutorFactory extends RunnerBuilder {
     private TestRunnerConfig getTestConfig() throws AutomationRunnerException {
         TestRunnerConfig testConfig = new TestRunnerConfig();
         Bundle arguments = InstrumentationRegistry.getArguments();
+
         String testConfigName = "default";
         if (arguments != null && arguments.containsKey("config")) {
             testConfigName = arguments.getString("config");
